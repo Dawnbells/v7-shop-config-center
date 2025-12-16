@@ -4,7 +4,8 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    tags:
+      - 'V*' # 匹配所有 v 开头的 tag，如 v1.0.0, v2.3.4
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
