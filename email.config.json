@@ -27,8 +27,7 @@
       "prefix": "email-template",
       "i18n": true,
       "default-values": {
-        "subject": "",
-        "content": ""
+
       }
     }
   ],
@@ -95,6 +94,12 @@
     }
   },
   "email-template": {
+    "default": {
+      "type": "boolean",
+      "label": "默认模板",
+      "description": "是否为默认模板",
+      "required": false
+    },
     "subject": {
       "type": "string",
       "label": "邮件主题",
