@@ -6,20 +6,29 @@
       "description": "邮箱设置",
       "prefix": "email",
       "default-values": {
-        "email": {
-          "open": false,
-          "host": "",
-          "port": 587,
-          "username": "",
-          "password": "",
-          "from": "",
-          "secure": false,
-          "connection-timeout": 5000,
-          "timeout": 5000,
-          "write-timeout": 5000,
-          "subject": "",
-          "content": ""
-        }
+        "open": false,
+        "host": "",
+        "port": 587,
+        "username": "",
+        "password": "",
+        "from": "",
+        "secure": false,
+        "connection-timeout": 5000,
+        "timeout": 5000,
+        "write-timeout": 5000,
+        "subject": "",
+        "content": ""
+      }
+    },
+    {
+      "name": "email-template",
+      "label": "邮件模板",
+      "description": "邮件模板",
+      "prefix": "email-template",
+      "i18n": true,
+      "default-values": {
+        "subject": "",
+        "content": ""
       }
     }
   ],
@@ -83,44 +92,44 @@
       "label": "写入超时时间（毫秒）",
       "description": "SMTP 写入数据的超时时间，单位毫秒",
       "required": false
+    }
+  },
+  "email-template": {
+    "subject": {
+      "type": "string",
+      "label": "邮件主题",
+      "description": "邮件主题",
+      "required": true
     },
-    "i18n": {
-      "subject": {
-        "type": "string",
-        "label": "邮件主题",
-        "description": "邮件主题",
-        "required": true
-      },
-      "content": {
-        "type": "html",
-        "label": "邮件模板",
-        "description": "邮件模板，支持HTML格式",
-        "required": true,
-        "placeholders": {
-          "name": {
-            "type": "string",
-            "label": "客户姓名",
-            "description": "客户姓名",
-            "placeholder": "{{name}}"
-          },
-          "phone": {
-            "type": "string",
-            "label": "客户电话",
-            "description": "客户电话",
-            "placeholder": "{{phone}}"
-          },
-          "email": {
-            "type": "string",
-            "label": "客户邮箱",
-            "description": "客户邮箱",
-            "placeholder": "{{email}}"
-          },
-          "orderId": {
-            "type": "string",
-            "label": "订单号",
-            "description": "订单号",
-            "placeholder": "{{orderId}}"
-          }
+    "content": {
+      "type": "html",
+      "label": "邮件模板",
+      "description": "邮件模板，支持HTML格式",
+      "required": true,
+      "placeholders": {
+        "name": {
+          "type": "string",
+          "label": "客户姓名",
+          "description": "客户姓名",
+          "placeholder": "{{name}}"
+        },
+        "phone": {
+          "type": "string",
+          "label": "客户电话",
+          "description": "客户电话",
+          "placeholder": "{{phone}}"
+        },
+        "email": {
+          "type": "string",
+          "label": "客户邮箱",
+          "description": "客户邮箱",
+          "placeholder": "{{email}}"
+        },
+        "orderId": {
+          "type": "string",
+          "label": "订单号",
+          "description": "订单号",
+          "placeholder": "{{orderId}}"
         }
       }
     }
