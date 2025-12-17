@@ -17,18 +17,35 @@
         "timeout": 5000,
         "write-timeout": 5000,
         "subject": "",
-        "content": ""
+        "content": "",
+        "audit_status_enabled": true,
+        "delivery_status_enabled": true,
+        "subscribe_update": true
       }
     },
     {
       "name": "email-template",
-      "label": "邮件模板",
-      "description": "邮件模板",
+      "label": "订单创建模板",
+      "description": "订单创建模板",
       "prefix": "email-template",
       "i18n": true,
-      "default-values": {
-
-      }
+      "default-values": {}
+    },
+    {
+      "name": "audit-template",
+      "label": "审单状态变更模板",
+      "description": "审单状态变更模板",
+      "prefix": "audit-template",
+      "i18n": true,
+      "default-values": {}
+    },
+    {
+      "name": "delivery-template",
+      "label": "物流变化模板",
+      "description": "物流变化模板",
+      "prefix": "delivery-template",
+      "i18n": true,
+      "default-values": {}
     }
   ],
   "email": {
@@ -74,22 +91,22 @@
       "description": "是否启用SSL/TLS加密连接",
       "required": false
     },
-    "connection-timeout": {
-      "type": "number",
-      "label": "连接超时时间（毫秒）",
-      "description": "建立 SMTP 连接的超时时间，单位毫秒",
+    "audit_status_enabled": {
+      "type": "boolean",
+      "label": "审单状态通知",
+      "description": "是否开启审单状态通知",
       "required": false
     },
-    "timeout": {
-      "type": "number",
-      "label": "请求超时时间（毫秒）",
-      "description": "SMTP 请求/响应的超时时间，单位毫秒",
+    "delivery_status_enabled": {
+      "type": "boolean",
+      "label": "发货状态变更通知",
+      "description": "是否开启发货状态变更通知",
       "required": false
     },
-    "write-timeout": {
-      "type": "number",
-      "label": "写入超时时间（毫秒）",
-      "description": "SMTP 写入数据的超时时间，单位毫秒",
+    "subscribe_update": {
+      "type": "boolean",
+      "label": "订阅更新邮件",
+      "description": "用户是否订阅系统/订单/发货等更新通知邮件, 关闭后，将强制发送对应邮件通知",
       "required": false
     }
   },
@@ -112,29 +129,229 @@
       "description": "邮件模板，支持HTML格式",
       "required": true,
       "placeholders": {
-        "name": {
+        "customer_name": {
           "type": "string",
           "label": "客户姓名",
           "description": "客户姓名",
-          "placeholder": "{{name}}"
+          "placeholder": "{{customer_name}}"
         },
-        "phone": {
+        "customer_phone": {
           "type": "string",
           "label": "客户电话",
           "description": "客户电话",
-          "placeholder": "{{phone}}"
+          "placeholder": "{{customer_phone}}"
         },
-        "email": {
+        "customer_email": {
           "type": "string",
           "label": "客户邮箱",
           "description": "客户邮箱",
-          "placeholder": "{{email}}"
+          "placeholder": "{{customer_email}}"
         },
-        "orderId": {
+        "customer_address": {
+          "type": "string",
+          "label": "客户地址",
+          "description": "客户收货地址",
+          "placeholder": "{{customer_address}}"
+        },
+        "customer_region": {
+          "type": "string",
+          "label": "客户地区",
+          "description": "客户所在地区（省/州/市等）",
+          "placeholder": "{{customer_region}}"
+        },
+        "customer_postal_code": {
+          "type": "string",
+          "label": "邮编",
+          "description": "客户邮政编码",
+          "placeholder": "{{customer_postal_code}}"
+        },
+        "customer_remark": {
+          "type": "string",
+          "label": "客户备注",
+          "description": "客户备注信息",
+          "placeholder": "{{customer_remark}}"
+        },
+        "order_id": {
           "type": "string",
           "label": "订单号",
           "description": "订单号",
-          "placeholder": "{{orderId}}"
+          "placeholder": "{{order_id}}"
+        },
+        "order_amount": {
+          "type": "string",
+          "label": "订单金额",
+          "description": "订单金额（格式化后的字符串）",
+          "placeholder": "{{order_amount}}"
+        },
+        "order_items": {
+          "type": "string",
+          "label": "订单商品明细",
+          "description": "订单商品列表明细（拼接后的字符串）",
+          "placeholder": "{{order_items}}"
+        }
+      }
+    }
+  },
+  "audit-template": {
+    "default": {
+      "type": "boolean",
+      "label": "默认模板",
+      "description": "是否为默认模板",
+      "required": false
+    },
+    "subject": {
+      "type": "string",
+      "label": "邮件主题",
+      "description": "邮件主题",
+      "required": true
+    },
+    "content": {
+      "type": "html",
+      "label": "邮件模板",
+      "description": "邮件模板，支持HTML格式",
+      "required": true,
+      "placeholders": {
+        "customer_name": {
+          "type": "string",
+          "label": "客户姓名",
+          "description": "客户姓名",
+          "placeholder": "{{customer_name}}"
+        },
+        "customer_phone": {
+          "type": "string",
+          "label": "客户电话",
+          "description": "客户电话",
+          "placeholder": "{{customer_phone}}"
+        },
+        "customer_email": {
+          "type": "string",
+          "label": "客户邮箱",
+          "description": "客户邮箱",
+          "placeholder": "{{customer_email}}"
+        },
+        "customer_address": {
+          "type": "string",
+          "label": "客户地址",
+          "description": "客户收货地址",
+          "placeholder": "{{customer_address}}"
+        },
+        "customer_region": {
+          "type": "string",
+          "label": "客户地区",
+          "description": "客户所在地区（省/州/市等）",
+          "placeholder": "{{customer_region}}"
+        },
+        "customer_postal_code": {
+          "type": "string",
+          "label": "邮编",
+          "description": "客户邮政编码",
+          "placeholder": "{{customer_postal_code}}"
+        },
+        "customer_remark": {
+          "type": "string",
+          "label": "客户备注",
+          "description": "客户备注信息",
+          "placeholder": "{{customer_remark}}"
+        },
+        "order_id": {
+          "type": "string",
+          "label": "订单号",
+          "description": "订单号",
+          "placeholder": "{{order_id}}"
+        },
+        "order_amount": {
+          "type": "string",
+          "label": "订单金额",
+          "description": "订单金额（格式化后的字符串）",
+          "placeholder": "{{order_amount}}"
+        },
+        "order_items": {
+          "type": "string",
+          "label": "订单商品明细",
+          "description": "订单商品列表明细（拼接后的字符串）",
+          "placeholder": "{{order_items}}"
+        }
+      }
+    }
+  },
+  "delivery-template": {
+    "default": {
+      "type": "boolean",
+      "label": "默认模板",
+      "description": "是否为默认模板",
+      "required": false
+    },
+    "subject": {
+      "type": "string",
+      "label": "邮件主题",
+      "description": "邮件主题",
+      "required": true
+    },
+    "content": {
+      "type": "html",
+      "label": "邮件模板",
+      "description": "邮件模板，支持HTML格式",
+      "required": true,
+      "placeholders": {
+        "customer_name": {
+          "type": "string",
+          "label": "客户姓名",
+          "description": "客户姓名",
+          "placeholder": "{{customer_name}}"
+        },
+        "customer_phone": {
+          "type": "string",
+          "label": "客户电话",
+          "description": "客户电话",
+          "placeholder": "{{customer_phone}}"
+        },
+        "customer_email": {
+          "type": "string",
+          "label": "客户邮箱",
+          "description": "客户邮箱",
+          "placeholder": "{{customer_email}}"
+        },
+        "customer_address": {
+          "type": "string",
+          "label": "客户地址",
+          "description": "客户收货地址",
+          "placeholder": "{{customer_address}}"
+        },
+        "customer_region": {
+          "type": "string",
+          "label": "客户地区",
+          "description": "客户所在地区（省/州/市等）",
+          "placeholder": "{{customer_region}}"
+        },
+        "customer_postal_code": {
+          "type": "string",
+          "label": "邮编",
+          "description": "客户邮政编码",
+          "placeholder": "{{customer_postal_code}}"
+        },
+        "customer_remark": {
+          "type": "string",
+          "label": "客户备注",
+          "description": "客户备注信息",
+          "placeholder": "{{customer_remark}}"
+        },
+        "order_id": {
+          "type": "string",
+          "label": "订单号",
+          "description": "订单号",
+          "placeholder": "{{order_id}}"
+        },
+        "order_amount": {
+          "type": "string",
+          "label": "订单金额",
+          "description": "订单金额（格式化后的字符串）",
+          "placeholder": "{{order_amount}}"
+        },
+        "order_items": {
+          "type": "string",
+          "label": "订单商品明细",
+          "description": "订单商品列表明细（拼接后的字符串）",
+          "placeholder": "{{order_items}}"
         }
       }
     }
