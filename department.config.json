@@ -1,13 +1,23 @@
 {
   "tabs": [
     {
-      "name": "email-settings",
+      "name": "email",
       "label": "邮箱设置",
       "description": "邮箱设置",
-      "prefix": "email"
+      "prefix": "email",
+      "default-values": {
+        "email": {
+          "host": "",
+          "port": 587,
+          "username": "",
+          "password": "",
+          "from": "",
+          "secure": false
+        }
+      }
     }
   ],
-  "email-settings": {
+  "email": {
     "host": {
       "type": "string",
       "label": "SMTP服务器地址",
@@ -43,16 +53,6 @@
       "label": "使用SSL/TLS加密",
       "description": "是否启用SSL/TLS加密连接",
       "required": false
-    }
-  },
-  "default-values": {
-    "base": {
-      "host": "",
-      "port": 587,
-      "username": "",
-      "password": "",
-      "from": "",
-      "secure": false
     }
   }
 }
