@@ -53,37 +53,37 @@
       "type": "boolean",
       "label": "开启邮件通知",
       "description": "是否开启邮件通知",
-      "required": false
+      "required": true
     },
     "host": {
       "type": "string",
       "label": "SMTP服务器地址",
       "description": "SMTP服务器地址，用于发送邮件",
-      "required": true
+      "required": false
     },
     "port": {
       "type": "number",
       "label": "端口",
       "description": "SMTP服务器端口号",
-      "required": true
+      "required": false
     },
     "username": {
       "type": "string",
       "label": "用户名",
       "description": "邮箱用户名，用于SMTP认证",
-      "required": true
+      "required": false
     },
     "password": {
       "type": "string",
       "label": "密码",
       "description": "邮箱密码，用于SMTP认证",
-      "required": true
+      "required": false
     },
     "from": {
       "type": "string",
       "label": "发件人地址",
       "description": "发件人邮箱地址",
-      "required": true
+      "required": false
     },
     "secure": {
       "type": "boolean",
