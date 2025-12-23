@@ -7,8 +7,8 @@
       "prefix": "email",
       "default-values": {
         "open": false,
-        "host": "",
-        "port": 587,
+        "host": "smtp.gmail.com",
+        "port": 465,
         "username": "",
         "password": "",
         "from": "",
